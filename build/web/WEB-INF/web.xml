@@ -36,6 +36,14 @@
         <servlet-name>OutSourceToCloud</servlet-name>
         <servlet-class>OutSourceToCloud</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SendKeyToMail</servlet-name>
+        <servlet-class>SendKeyToMail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DecryptData</servlet-name>
+        <servlet-class>DecryptData</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserRegister</servlet-name>
         <url-pattern>/UserRegister</url-pattern>
@@ -71,6 +79,14 @@
     <servlet-mapping>
         <servlet-name>OutSourceToCloud</servlet-name>
         <url-pattern>/OutSourceToCloud</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendKeyToMail</servlet-name>
+        <url-pattern>/SendKeyToMail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DecryptData</servlet-name>
+        <url-pattern>/DecryptData</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

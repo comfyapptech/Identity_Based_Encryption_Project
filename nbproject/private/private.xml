@@ -5,11 +5,8 @@
         <group>
             <file>file:/C:/Users/Prabhunath/Documents/NetBeansProjects/Identity_Based_Encryption/src/java/OutSourceToCloud.java</file>
             <file>file:/C:/Users/Prabhunath/Documents/NetBeansProjects/Identity_Based_Encryption/src/java/EncryptionUtil.java</file>
-            <file>file:/C:/Users/Prabhunath/Documents/NetBeansProjects/Identity_Based_Encryption/src/java/FileUpload.java</file>
-            <file>file:/C:/Users/Prabhunath/Documents/NetBeansProjects/Identity_Based_Encryption/web/logout.jsp</file>
-            <file>file:/C:/Users/Prabhunath/Documents/NetBeansProjects/Identity_Based_Encryption/web/userlogin.jsp</file>
-            <file>file:/C:/Users/Prabhunath/Documents/NetBeansProjects/Identity_Based_Encryption/src/java/UserLogin.java</file>
-            <file>file:/C:/Users/Prabhunath/Documents/NetBeansProjects/Identity_Based_Encryption/web/upload.jsp</file>
+            <file>file:/C:/Users/Prabhunath/Documents/NetBeansProjects/Identity_Based_Encryption/web/outsource_key.jsp</file>
+            <file>file:/C:/Users/Prabhunath/Documents/NetBeansProjects/Identity_Based_Encryption/src/java/DecryptData.java</file>
         </group>
     </open-files>
 </project-private>

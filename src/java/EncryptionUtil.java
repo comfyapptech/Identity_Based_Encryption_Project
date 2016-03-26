@@ -176,6 +176,7 @@ public class EncryptionUtil {
       // Decrypt the cipher text using the private key.
       inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
       final PrivateKey privateKey = (PrivateKey) inputStream.readObject();
+      System.out.println(":::::::::::::::::::::::"+privateKey.toString().getBytes());
       final String plainText = decrypt(cipherText, privateKey);
 
       // Printing the Original, Encrypted and Decrypted Text

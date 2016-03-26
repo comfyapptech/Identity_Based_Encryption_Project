@@ -4,38 +4,35 @@
  * and open the template in the editor.
  */
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.sql.*;
 import javax.crypto.Cipher;
-import java.io.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Prabhunath
  */
-public class FileUpload extends HttpServlet {
+public class DecryptData extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,101 +47,70 @@ public class FileUpload extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. 
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet FileUpload</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet FileUpload at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");*/
-            HttpSession se= request.getSession();
-            String user_email=(String)se.getAttribute("User_Email");
-            out.println("<h1>Welcome "+user_email+"</h1>");
-            String originalText ="";
-            String filename=request.getParameter("file_name");
-           String path="C:\\Users\\Prabhunath\\Desktop\\MyFiles\\"+filename;
-           out.println("File Name:"+filename+"  <br>Path: "+path+"<br>");
-           
-           
-           
-           //--------------- Program to create Folder----------------
-           File theDir = new File("E:\\Cloud\\"+user_email);
-
-            // if the directory does not exist, create it
-            if (!theDir.exists()) {
-               // System.out.println("creating directory: " + fileName);
-                boolean result = false;
-
-                try{
-                    theDir.mkdir();
-                    result = true;
-                } 
-                catch(SecurityException see){
-                    //handle it
-                }        
-                
+            /* TODO output your page here. You may use following sample code. */
+            HttpSession se=request.getSession();
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/ibeorcc","root","password");
+            String Email=(String)se.getAttribute("u_email");
+            String fname=(String)se.getAttribute("file_name");
+            String private_key=request.getParameter("private_key");
+            
+            out.println("<h1>Private Key To Decrypt: '"+private_key+"'</h1>");
+            File   file = new File("E:\\Cloud\\"+Email+"\\"+fname);
+            out.println("PATH:  "+"E:\\Cloud\\"+Email+"\\"+fname);
+            
+            String query="select * from csp_files_table where email='"+Email+"' and filename='"+fname.trim()+"'";
+            Statement st=con.createStatement();
+            ResultSet rs=st.executeQuery(query);
+            String encdata="";
+            if(rs.next())
+            {
+                encdata=rs.getString("Encrypted_data");
             }
-           
-           
-           
-           
-           
-            FileReader fileReader = new FileReader(path);
-              
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String line;
-            String data="";
-            while((line = bufferedReader.readLine()) != null) {
-                data+=line;
-            }   
-            bufferedReader.close();
-            out.println("Data in file : "+data+"<br>");
-            originalText=data;
-            if (!areKeysPresent()) {
-        // Method generates a pair of keys using the RSA algorithm and stores it
-        // in their respective files
-            generateKey();
-         }
-      
-      ObjectInputStream inputStream = null;
+            byte c_data[]=encdata.getBytes();
+            out.println(query+"<br>"+encdata);
+            ObjectInputStream inputStream = null;
+            //inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
+            //inputStream = new ObjectInputStream(private_key);
+            PrivateKey p1=(PrivateKey)(Object)private_key;
+            PrivateKey privateKey = (PrivateKey) inputStream.readObject();
+            out.println("<hr><hr>");
+            String plainText = decrypt(c_data, privateKey);
+            out.println("<hr><hr>jhfgkljhfgvljkhgljgh");
+            out.println("Original data: <br>"+plainText);
+           /* 
+            Path path = Paths.get("E:\\Cloud\\"+Email+"\\"+fname);
+            out.println("<br>okok");
+            byte[] data = Files.readAllBytes(path);
+             out.println("<br>okok");  
+            byte cipherText[] = new byte[(int)file.length()];
 
-      // Encrypt the string using the public key
-      inputStream = new ObjectInputStream(new FileInputStream(PUBLIC_KEY_FILE));
-      final PublicKey publicKey = (PublicKey) inputStream.readObject();
-      final byte[] cipherText = encrypt(originalText, publicKey);
+            ObjectInputStream inputStream = null;
+            inputStream = new ObjectInputStream(new FileInputStream(""+private_key));
+            PrivateKey privateKey = (PrivateKey) inputStream.readObject();
+            String plainText = decrypt(data, privateKey);
+            out.println("Original data: <br>"+plainText);
+            
+            
+          
+            
+            final byte[] cipherText = encrypt(originalText, publicKey);
 
       // Decrypt the cipher text using the private key.
       inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
       final PrivateKey privateKey = (PrivateKey) inputStream.readObject();
       final String plainText = decrypt(cipherText, privateKey);
-
-      // Printing the Original, Encrypted and Decrypted Text
-      out.println("<br>Original Text: " + originalText);
-      out.println("<br>Encrypted Text: " +cipherText.toString());
-      out.println("<br>Decrypted Text: " + plainText);
-      out.println("<br>Public key: " + publicKey);
-      out.println("<br>Private key: "+privateKey); 
-      Class.forName("com.mysql.jdbc.Driver");
-      Date date = new Date();
-      SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
-      String formattedDate = sdf.format(date);
-      Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ibeorcc","root","password");
-      String query ="insert into userfile values('"+user_email+"','"+filename+"','"+data.length()+"','"+data+"','"+formattedDate+"')";
-     
-      
-      
-      out.println("<hr><hr>query= "+query);
-      Statement st= con.createStatement();
-      int x=st.executeUpdate(query);
-      if(x>0)
-      {
-          out.println("File Uploaded succes!!");
-          se.setAttribute("uploadMessage", "File Uploaded succes!!");
-          response.sendRedirect("upload.jsp");
-      }
+            \
+            
+            
+            
+            */
+            
+            
+            
+            
+            
+            
         }
         catch(Exception ee)
         {
@@ -190,6 +156,10 @@ public class FileUpload extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+
+
+//--------------------------RSA FOR DECRYPTION--------------------------------
     
     public static final String ALGORITHM = "RSA";
 
@@ -315,10 +285,13 @@ public class FileUpload extends HttpServlet {
 
     return new String(dectyptedText);
   }
+  
+    
 
-  /**
-   * Test the EncryptionUtil
-   */
+
+
+
+
 
 
 }

@@ -38,7 +38,7 @@
             {
                 border: 1px solid black;
                 border-radius: 20px;
-                width:400px;
+                width:1200px;
             }
         </style>
     <body>
@@ -65,45 +65,37 @@
         <%
         Class.forName("com.mysql.jdbc.Driver");
        HttpSession se=request.getSession();
-       Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/ibeorcc","root","password");
-       String email=(String)se.getAttribute("User_Email");
-       out.println("<h3>Welcome @"+email+"</h3>");
-       String password=(String)se.getAttribute("User_Password");
-       String query="select * from users where email='"+email+"' and password='"+password+"'";
-       Statement pst=con.createStatement();
-       ResultSet rs=pst.executeQuery(query);
+       String Email=(String)se.getAttribute("u_email");
+       String fname=(String)se.getAttribute("file_name");
+       se.setAttribute("u_email",Email);
+       se.setAttribute("file_name",fname);        
+       out.println("<hr>Email: "+Email+"<hr>Key Sent For File Name: "+fname);
        %>
+       
         <hr>
-        <div style="border:2px solid green; height:400px;border-radius:30px; background-image:url('Images/file_upload1.png');background-size: 1350px 400px;background-repeat: no-repeat; ">
-            <div class="innerdiv">
-                 <h2>Upload Your File to Cloud</h2>
-                <table>
-                    <form method="post" action="FileUpload">
+        <div style="border:2px solid green; height:400px;border-radius:30px; background-image:url('Images/encrypt.jpg');background-size: 1350px 400px;background-repeat: no-repeat; ">
+            <div class="innerdiv" style="display:table;">
+                 <h2 style="color:white;">Enter Key </h2>
+            </td>
+              <td>    
+                   
+                <table style="background-color:white;color:red;opacity: 0.6; ">
+                    <form method="POST" action="DecryptData">
                         <tr>
-                            <td>Select file: </td>
-                            <td><input type="file" name="file_name"></td>
-                             
+                            <td>Enter Private Key Sent to your Mail:</td> <td><input style="background-color:white;" type="text" name="private_key"></td>
+                             </tr>
+                              
+                              <tr>
+                                  <td></td> <td><input type="submit" value="Submit Key!!"></td>
                         </tr>
-                        <tr>
-                            <td></td>
-                            <td><input type="submit" value="Upload on cloud"></td>
-                        </tr>
+                            
+                        
                     </form>
-                </table>
-            </div>
-            
-             <%
-                    String name=request.getParameter("file_name");
-                    //out.println("<p style='color:black;'>Hi there!!</p>");
-                    if(session.getAttribute("uploadMessage") != null)
-                    {
-                        //out.println("<p style='color:black;'>Hi there!!</p>");
-                    
-                    String message = (String)se.getAttribute("uploadMessage");
-                    out.println("<p style='color:black;'>"+message+"</p>");
-                    }
-                    
-                %>
+                </table>  
+              </td>
+                     </tr>
+                 
+               </div>
             .
         </div>
         

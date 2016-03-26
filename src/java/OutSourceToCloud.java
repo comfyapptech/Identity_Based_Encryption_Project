@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -26,6 +27,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Arrays;
 import javax.crypto.Cipher;
 
 /**
@@ -86,10 +88,15 @@ public class OutSourceToCloud extends HttpServlet {
      public_key=publicKey.toString();
      private_key=privateKey.toString();
      String outsource_query="insert into csp_files_table values('"+file_name+"','"+owner_email+"','"+public_key+"','"+private_key+"','"+uploaded_on+"','"+cipherText.toString()+"','"+original_data+"','"+size+"')";
+     File   eoutput = new File("E:\\Cloud\\"+owner_email+"\\"+file_name);
+     OutputStream outputStream=new FileOutputStream(eoutput);
+     outputStream.write(cipherText);
+     outputStream.close();
+     
      int x=st.executeUpdate(outsource_query);
      if(x>0)
      {
-         response.sendRedirect("outsource_key.jsp");
+         response.sendRedirect("outsource_key.jsp?FileUploaded Sucessfully!!");
      }
      else
      {
@@ -271,11 +278,6 @@ public class OutSourceToCloud extends HttpServlet {
 
     return new String(dectyptedText);
   }
-
-    
-    
-    
-    
-    
+  
     
 }

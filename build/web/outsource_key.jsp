@@ -53,7 +53,7 @@
     <body>
     <center>
         <div class="head">
-            <h2>Identity-Based Encryption with Outsourced Revocation in Cloud Computing</h2>
+            <h2>Identity Based Encryption using KU-CSP</h2>
         </div>
         <table class="tbl">
             <tr>
@@ -106,11 +106,7 @@
                         rs.getString("size")+"</td><td>"+rs.getString("upload_date")+"</td></tr>");
                         
                         }
-                        
-                        
-                        
-                        
-                        
+   
                         %>
                         
                     </table>
