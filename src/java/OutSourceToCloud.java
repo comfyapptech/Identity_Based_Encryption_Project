@@ -24,7 +24,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Arrays;
@@ -87,16 +89,38 @@ public class OutSourceToCloud extends HttpServlet {
      // System.out.println("Decrypted Text: " + plainText);
      public_key=publicKey.toString();
      private_key=privateKey.toString();
-     String outsource_query="insert into csp_files_table values('"+file_name+"','"+owner_email+"','"+public_key+"','"+private_key+"','"+uploaded_on+"','"+cipherText.toString()+"','"+original_data+"','"+size+"')";
+     
+     String q="insert into csp_files values(?,?,?,?,?,?,?,?)";  
+       PreparedStatement pst=con.prepareStatement(q);
+     
+     
+     byte pkey1[]=publicKey.getEncoded();
+          byte prkey1[]=privateKey.getEncoded();
+    
+     String outsource_query="insert into csp_files values('"+file_name+"','"+owner_email+"','"+pkey1+"','"+prkey1+"','"+uploaded_on+"','"+cipherText+"','"+original_data+"','"+size+"')";
+      //out.println(outsource_query);
+      
+      pst.setString(1,file_name);
+      pst.setString(2,owner_email);
+      pst.setBytes(3,pkey1);
+      pst.setBytes(4,prkey1);
+      pst.setDate(5, Date.valueOf(uploaded_on));
+      pst.setBytes(6,cipherText);
+      pst.setString(7,original_data);
+      pst.setString(8,size);
+      
      File   eoutput = new File("E:\\Cloud\\"+owner_email+"\\"+file_name);
      OutputStream outputStream=new FileOutputStream(eoutput);
      outputStream.write(cipherText);
      outputStream.close();
-     
-     int x=st.executeUpdate(outsource_query);
+     out.println(outsource_query);
+     //int x=st.executeUpdate(outsource_query);
+     int x=pst.executeUpdate();
+     out.println("HELLO THERE!!");
      if(x>0)
      {
          response.sendRedirect("outsource_key.jsp?FileUploaded Sucessfully!!");
+        // out.println("Inserted!!");
      }
      else
      {

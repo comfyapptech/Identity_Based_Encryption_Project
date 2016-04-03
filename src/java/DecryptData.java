@@ -6,6 +6,7 @@
 
 
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,10 +17,12 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.sql.*;
 import javax.crypto.Cipher;
 import javax.servlet.ServletException;
@@ -55,59 +58,30 @@ public class DecryptData extends HttpServlet {
             String fname=(String)se.getAttribute("file_name");
             String private_key=request.getParameter("private_key");
             
-            out.println("<h1>Private Key To Decrypt: '"+private_key+"'</h1>");
-            File   file = new File("E:\\Cloud\\"+Email+"\\"+fname);
-            out.println("PATH:  "+"E:\\Cloud\\"+Email+"\\"+fname);
-            
-            String query="select * from csp_files_table where email='"+Email+"' and filename='"+fname.trim()+"'";
+            String query="select private_key from Mailed where email='"+Email+"' and sent_key='"+private_key+"'";
+            out.println(query);
             Statement st=con.createStatement();
             ResultSet rs=st.executeQuery(query);
-            String encdata="";
+            
+            PrivateKey privateKey1=null;
             if(rs.next())
             {
-                encdata=rs.getString("Encrypted_data");
+                
+                Blob pvt_blob=rs.getBlob(1);
+                privateKey1 = KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(pvt_blob.getBytes(1, (int)pvt_blob.length())));
+               
             }
-            byte c_data[]=encdata.getBytes();
-            out.println(query+"<br>"+encdata);
-            ObjectInputStream inputStream = null;
-            //inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
-            //inputStream = new ObjectInputStream(private_key);
-            PrivateKey p1=(PrivateKey)(Object)private_key;
-            PrivateKey privateKey = (PrivateKey) inputStream.readObject();
-            out.println("<hr><hr>");
-            String plainText = decrypt(c_data, privateKey);
-            out.println("<hr><hr>jhfgkljhfgvljkhgljgh");
-            out.println("Original data: <br>"+plainText);
-           /* 
-            Path path = Paths.get("E:\\Cloud\\"+Email+"\\"+fname);
-            out.println("<br>okok");
-            byte[] data = Files.readAllBytes(path);
-             out.println("<br>okok");  
-            byte cipherText[] = new byte[(int)file.length()];
-
-            ObjectInputStream inputStream = null;
-            inputStream = new ObjectInputStream(new FileInputStream(""+private_key));
-            PrivateKey privateKey = (PrivateKey) inputStream.readObject();
-            String plainText = decrypt(data, privateKey);
-            out.println("Original data: <br>"+plainText);
-            
-            
-          
-            
-            final byte[] cipherText = encrypt(originalText, publicKey);
-
-      // Decrypt the cipher text using the private key.
-      inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
-      final PrivateKey privateKey = (PrivateKey) inputStream.readObject();
-      final String plainText = decrypt(cipherText, privateKey);
-            \
-            
-            
-            
-            */
-            
-            
-            
+            String query_for_enc_data="select Encrypted_data from csp_files where email='"+Email+"' and filename='"+fname.trim()+"'";
+            ResultSet rs1=st.executeQuery(query_for_enc_data);
+            out.println("<br>oooookkkkk###<br>"+query_for_enc_data);
+            byte cyphertext[]=null;
+            if(rs1.next())
+            {
+                Blob b=rs1.getBlob(1);
+                cyphertext=b.getBytes(1,(int)b.length());
+            }
+            String plaintext=decrypt(cyphertext, privateKey1);
+            out.println("Your File Data is: <hr>"+plaintext);
             
             
             
