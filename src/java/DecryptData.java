@@ -5,15 +5,18 @@
  */
 
 
-
-
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,6 +33,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
 
 /**
  *
@@ -58,7 +64,7 @@ public class DecryptData extends HttpServlet {
             String fname=(String)se.getAttribute("file_name");
             String private_key=request.getParameter("private_key");
             
-            String query="select private_key from Mailed where email='"+Email+"' and sent_key='"+private_key+"'";
+            String query="select private_key from Mailed where email='"+Email+"' and sent_key='"+private_key.trim()+"'";
             out.println(query);
             Statement st=con.createStatement();
             ResultSet rs=st.executeQuery(query);
@@ -71,20 +77,43 @@ public class DecryptData extends HttpServlet {
                 privateKey1 = KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(pvt_blob.getBytes(1, (int)pvt_blob.length())));
                
             }
-            String query_for_enc_data="select Encrypted_data from csp_files where email='"+Email+"' and filename='"+fname.trim()+"'";
-            ResultSet rs1=st.executeQuery(query_for_enc_data);
-            out.println("<br>oooookkkkk###<br>"+query_for_enc_data);
-            byte cyphertext[]=null;
-            if(rs1.next())
-            {
-                Blob b=rs1.getBlob(1);
-                cyphertext=b.getBytes(1,(int)b.length());
-            }
-            String plaintext=decrypt(cyphertext, privateKey1);
+            //---------------  Reading Encrypted Files----------------
+            
+            String path="E:\\Cloud\\"+Email.trim()+"\\"+fname.trim();
+             out.println("Hi Terre..."+path);
+            FileReader fileReader = new FileReader(path);
+           
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            String data="";
+            
+            while((line = bufferedReader.readLine()) != null) {
+                data+=line;
+            }   
+            bufferedReader.close();
+            out.println("<br>Data in file : "+data+"<br>");
+            Path path1 = Paths.get(path);
+            byte[] data1 = Files.readAllBytes(path1);
+            //----------------------------------------            
+            
+           // String query_for_enc_data="select Encrypted_data from csp_files where email='"+Email+"' and filename='"+fname.trim()+"'";
+           // ResultSet rs1=st.executeQuery(query_for_enc_data);
+           // out.println("<br>"+query_for_enc_data+"<hr>");
+           // byte cyphertext[]=null;
+           // if(rs1.next())
+           // {
+           //     Blob b=rs1.getBlob(1);
+           //     cyphertext=b.getBytes(1,(int)b.length());
+            //}
+            
+            String plaintext=decrypt(data1, privateKey1);
             out.println("Your File Data is: <hr>"+plaintext);
-            
-            
-            
+            File   eoutput = new File("C:\\Users\\Prabhunath\\Documents\\NetBeansProjects\\Identity_Based_Encryption\\web\\Downloaded\\"+fname.trim());
+            OutputStream outputStream=new FileOutputStream(eoutput);
+            outputStream.write(plaintext.getBytes());
+            outputStream.close();
+            out.println("<a  href='Downloaded/"+fname.trim()+"' download >Download</a>");
+            out.println("<a href='user_profile.jsp?File Downloaded Sucessfully.' >Go Back!</a>");
         }
         catch(Exception ee)
         {
@@ -259,13 +288,5 @@ public class DecryptData extends HttpServlet {
 
     return new String(dectyptedText);
   }
-  
-    
-
-
-
-
-
-
-
+ 
 }
