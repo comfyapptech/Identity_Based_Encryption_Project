@@ -3,49 +3,9 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <html>
-    <style>
-            .head{
-                border: 2px solid green;
-                border-radius:20px;
-                width:80%;
-                text-align:center;
-                background-color:green; 
-            }
-            .abs{
-                border: 2px solid green;
-                border-radius: 30px;
-            }
-            .tbl td
-            {
-                padding: 20px;
-            }
-            .footer
-            {
-                width:100%;
-                height:30px;
-                border:1px solid white;
-                background-color:green;
-                margin-top:200px;
-                
-                
-            }
-            .welcome
-            {
-                width:80%;
-                height:300px;
-            }
-            .innerdiv
-            {
-                border: 1px solid black;
-                border-radius: 20px;
-                width:1200px;
-            }
-        </style>
     <body>
     <center>
-        <div class="head">
-            <h2>Identity Based Encryption using KU-CSP</h2>
-        </div>
+        <%@include file="header.jsp" %>
         <table class="tbl">
             <tr>
                 <td>
@@ -69,7 +29,7 @@
        String fname=(String)se.getAttribute("file_name");
        se.setAttribute("u_email",Email);
        se.setAttribute("file_name",fname);        
-       out.println("<hr>Email: "+Email+"<hr>Key Sent For File Name: "+fname);
+       out.println("</center><hr><table style='width:30%;height:40px;background-color:black;color:white;border:1px solid white;border-radius:12px;'><tr><td>Email: </td><td>"+Email+"</td></tr><tr><td>Key Sent For File Name:</td><td>"+fname+"</td></tr></table><center>");
        %>
        
         <hr>

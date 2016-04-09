@@ -78,7 +78,7 @@ public final class PKGRegister_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("    <body>\n");
       out.write("    <center>\n");
       out.write("        <div class=\"head\">\n");
-      out.write("            <h2>Identity-Based Encryption with Outsourced Revocation in Cloud Computing</h2>\n");
+      out.write("            <h2>Identity Based Encryption using KU-CSP</h2>\n");
       out.write("        </div>\n");
       out.write("        <table class=\"tbl\">\n");
       out.write("            <tr>\n");

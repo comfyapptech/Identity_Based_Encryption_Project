@@ -56,7 +56,7 @@ public class MailDispatcherServlet extends HttpServlet {
             String subject1=(String)se.getAttribute("subject");
             String message1=(String)se.getAttribute("message");
             
-            out.println("<br>EMAIL:  "+toEmail1+"<br>SUBJECT:  "+subject1+"<br>MESSAGE:  "+message1+"<br>");
+            
             mailSender.sendEmail(fromEmail, username, password, toEmail1, subject1, message1);
             String filename[]=subject1.split(":");
                     
@@ -65,10 +65,13 @@ public class MailDispatcherServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Mail Sent Sucessfully!!</title>");            
+            out.println("<title>Mail Sent Sucessfully!!</title>");   
+            out.println("<link type=\"text/css\" href=\"CSS/main.css\" rel=\"stylesheet\" />");
             out.println("</head>");
             out.println("<body>");
+            out.println("<div class=\"head\"><h2>Identity Based Encryption using KU-CSP</h2></div>");
             out.println("<a href='decryption_using_key.jsp?check your email for key'>Check your Email and Click Here!!</a>");
+            out.println("<br>EMAIL:  "+toEmail1+"<br>SUBJECT:  "+subject1+"<br>MESSAGE:  "+message1+"<br>");
             out.println("</body>");
             out.println("</html>");
         }

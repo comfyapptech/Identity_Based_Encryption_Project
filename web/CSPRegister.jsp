@@ -1,46 +1,12 @@
 <html>
-    <style>
-            .head{
-                border: 2px solid green;
-                border-radius:20px;
-                width:80%;
-                text-align:center;
-                background-color:green; 
-            }
-            .abs{
-                border: 2px solid green;
-                border-radius: 30px;
-            }
-            .tbl td
-            {
-                padding: 20px;
-            }
-            .footer
-            {
-                width:100%;
-                height:30px;
-                border:1px solid white;
-                background-color:green;
-                margin-top:80px;
-                
-                
-            }
-            .form
-            {
-                display: inline-table;
-                height:300px;
-                border:1px solid white;
-            }
-        </style>
+    
     <body>
     <center>
-        <div class="head">
-            <h2>Identity Based Encryption using KU-CSP</h2>
-        </div>
+        <%@include file="header.jsp" %>
         <table class="tbl">
             <tr>
                 <td>
-                    <a href="index.html">HOME</a>
+                    <a href="index.jsp">HOME</a>
                 </td>
                 <td>
                      <a href="pkglogin.jsp">PKG</a>
@@ -56,7 +22,6 @@
                 </td>
             </tr>
         </table>
-        <hr>
         <div class="form" style="width:90%;">
             <div class="form" style="width:30%; background-color:green;background-image: url('Images/register.png'); background-repeat: no-repeat; background-size:400px 300px;">.</div>
             <div class="form" style="width:30%;margin-top: 20px;">

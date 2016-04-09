@@ -12,12 +12,14 @@
         <title>JSP Page</title>
     </head>
     <body>
+         <%@include file="header.jsp" %>
+          <%@include file="connection.jsp" %>
         <h1>logout!!</h1>
         <%
         HttpSession se= request.getSession();
         se.invalidate();
-        response.sendRedirect("index.html");
-        
+        response.sendRedirect("index.jsp");
+        con.close();
         %>
     </body>
 </html>

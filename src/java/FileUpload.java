@@ -61,6 +61,9 @@ public class FileUpload extends HttpServlet {
             out.println("</body>");
             out.println("</html>");*/
             HttpSession se= request.getSession();
+            String status=(String)se.getAttribute("STATUS");
+            if(status.equals("ACTIVE"))
+            {
             String user_email=(String)se.getAttribute("User_Email");
             out.println("<h1>Welcome "+user_email+"</h1>");
             String originalText ="";
@@ -146,6 +149,13 @@ public class FileUpload extends HttpServlet {
           response.sendRedirect("upload.jsp");
       }
         }
+        else
+            {
+                response.sendRedirect("user_profile.jsp");
+            }
+            
+        }
+        
         catch(Exception ee)
         {
             ee.printStackTrace();

@@ -100,7 +100,7 @@ public final class outsource_005fkey_jsp extends org.apache.jasper.runtime.HttpJ
       out.write("    <body>\n");
       out.write("    <center>\n");
       out.write("        <div class=\"head\">\n");
-      out.write("            <h2>Identity-Based Encryption with Outsourced Revocation in Cloud Computing</h2>\n");
+      out.write("            <h2>Identity Based Encryption using KU-CSP</h2>\n");
       out.write("        </div>\n");
       out.write("        <table class=\"tbl\">\n");
       out.write("            <tr>\n");
@@ -137,9 +137,9 @@ public final class outsource_005fkey_jsp extends org.apache.jasper.runtime.HttpJ
       out.write("                            <td class=\"tblrow\">\n");
       out.write("                                Uploaded On\n");
       out.write("                            </td>\n");
-      out.write("                            <td class=\"tblrow\">\n");
+      out.write("                          <!--  <td class=\"tblrow\">\n");
       out.write("                                Request key\n");
-      out.write("                            </td>\n");
+      out.write("                            </td>  -->\n");
       out.write("                        </tr>\n");
       out.write("                        ");
 
@@ -151,18 +151,27 @@ public final class outsource_005fkey_jsp extends org.apache.jasper.runtime.HttpJ
                         while(rs.next())
                         {
                         out.println("<tr style='text-align:center;'><td>"+rs.getString("file_name")+"</td><td>"+rs.getString("email")+"</td><td>"+
-                        rs.getString("size")+"</td><td>"+rs.getString("upload_date")+"</td><td><input type='submit' value='Request Key'></td></tr>");
+                        rs.getString("size")+"</td><td>"+rs.getString("upload_date")+"</td></tr>");
                         
                         }
-                        
-                        
-                        
-                        
-                        
+   
                         
       out.write("\n");
       out.write("                        \n");
       out.write("                    </table>\n");
+      out.write("                        <form method=\"POST\" action=\"OutSourceToCloud\">\n");
+      out.write("                            <table>\n");
+      out.write("                                <tr>\n");
+      out.write("                                    <td>File Name: </td><td><input type='text' name='file_name'></td>\n");
+      out.write("                                </tr>\n");
+      out.write("                                <tr>\n");
+      out.write("                                    <td>Owner Email: </td><td><input type='text' name='owner_email'></td>\n");
+      out.write("                                </tr>\n");
+      out.write("                                <tr>\n");
+      out.write("                                    <td></td><td><input type='submit' value='Out Source Key To Cloud'></td>\n");
+      out.write("                                </tr>\n");
+      out.write("                            </table>\n");
+      out.write("                        </form>\n");
       out.write("                </div>\n");
       out.write("            \n");
       out.write("            </div>\n");

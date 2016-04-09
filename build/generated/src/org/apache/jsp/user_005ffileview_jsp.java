@@ -15,6 +15,11 @@ public final class user_005ffileview_jsp extends org.apache.jasper.runtime.HttpJ
 
   private static java.util.List<String> _jspx_dependants;
 
+  static {
+    _jspx_dependants = new java.util.ArrayList<String>(1);
+    _jspx_dependants.add("/header.jsp");
+  }
+
   private org.glassfish.jsp.api.ResourceInjector _jspx_resourceInjector;
 
   public java.util.List<String> getDependants() {
@@ -50,49 +55,26 @@ public final class user_005ffileview_jsp extends org.apache.jasper.runtime.HttpJ
       out.write("\n");
       out.write("\n");
       out.write("<html>\n");
-      out.write("    <style>\n");
-      out.write("            .head{\n");
-      out.write("                border: 2px solid green;\n");
-      out.write("                border-radius:20px;\n");
-      out.write("                width:80%;\n");
-      out.write("                text-align:center;\n");
-      out.write("                background-color:green; \n");
-      out.write("            }\n");
-      out.write("            .abs{\n");
-      out.write("                border: 2px solid green;\n");
-      out.write("                border-radius: 30px;\n");
-      out.write("            }\n");
-      out.write("            .tbl td\n");
-      out.write("            {\n");
-      out.write("                padding: 20px;\n");
-      out.write("            }\n");
-      out.write("            .footer\n");
-      out.write("            {\n");
-      out.write("                width:100%;\n");
-      out.write("                height:30px;\n");
-      out.write("                border:1px solid white;\n");
-      out.write("                background-color:green;\n");
-      out.write("                margin-top:200px;\n");
-      out.write("                \n");
-      out.write("                \n");
-      out.write("            }\n");
-      out.write("            .welcome\n");
-      out.write("            {\n");
-      out.write("                width:80%;\n");
-      out.write("                height:300px;\n");
-      out.write("            }\n");
-      out.write("            .innerdiv\n");
-      out.write("            {\n");
-      out.write("                border: 1px solid black;\n");
-      out.write("                border-radius: 20px;\n");
-      out.write("                width:400px;\n");
-      out.write("            }\n");
-      out.write("        </style>\n");
+      out.write("\n");
+      out.write("    <body>\n");
+      out.write("    <center>\n");
+      out.write("        ");
+      out.write("<html>\n");
+      out.write("    <head>\n");
+      out.write("        <link type=\"text/css\" href=\"CSS/main.css\" rel=\"stylesheet\" />\n");
+      out.write("    </head>\n");
       out.write("    <body>\n");
       out.write("    <center>\n");
       out.write("        <div class=\"head\">\n");
-      out.write("            <h2>Identity-Based Encryption with Outsourced Revocation in Cloud Computing</h2>\n");
+      out.write("            <h2>Identity Based Encryption using KU-CSP</h2>\n");
       out.write("        </div>\n");
+      out.write("        \n");
+      out.write("        <hr>\n");
+      out.write("        \n");
+      out.write("    </center>\n");
+      out.write("    </body>\n");
+      out.write("</html>");
+      out.write("\n");
       out.write("        <table class=\"tbl\">\n");
       out.write("            <tr>\n");
       out.write("                <td>\n");
@@ -117,7 +99,7 @@ public final class user_005ffileview_jsp extends org.apache.jasper.runtime.HttpJ
        String email=(String)se.getAttribute("User_Email");
        out.println("<h3>Welcome @"+email+"</h3>");
        String password=(String)se.getAttribute("User_Password");
-       String query="select email,file_name,upload_date from userfile";
+       String query="select email,file_name,size,upload_date from userfile";
        Statement pst=con.createStatement();
        ResultSet rs=pst.executeQuery(query);
        
@@ -126,25 +108,44 @@ public final class user_005ffileview_jsp extends org.apache.jasper.runtime.HttpJ
       out.write("        <hr>\n");
       out.write("        <div style=\"border:2px solid green; height:400px;border-radius:30px; background-image:url('Images/encrypt.jpg');background-size: 1350px 400px;background-repeat: no-repeat; \">\n");
       out.write("            \n");
-      out.write("            <div class=\"innerdiv\">\n");
+      out.write("            <div class=\"innerdiv\" style=\"display:table;\">\n");
       out.write("                 <h2 style=\"color:white;\">Uploaded Files</h2>\n");
-      out.write("                <table style=\"text-align:center;color:white;width:100%;border:2px solid white; border-radius:12px; \">\n");
-      out.write("                    <tr><td>User Email</td><td>File Name</td><td>Date </td></tr>\n");
+      out.write("                 \n");
+      out.write("                 <table>\n");
+      out.write("                     <tr><td>\n");
+      out.write("                <table style=\"text-align:center;color:white;width:800px;border:2px solid white; border-radius:12px; \">\n");
+      out.write("                    <tr><td>User Email</td><td>File Name</td><td>Size </td><td>Uploaded on Date </td></tr>\n");
       out.write("                    ");
 
                     while(rs.next())
                     {
-                        out.println("<tr style='background-color:grey;'><td>"+rs.getString(1)+"</td><td> "+rs.getString(2)+"</td><td>"+rs.getString(3)+"</td></tr>");
+                        out.println("<tr style='background-color:grey;color:greenyellow; '><td>"+rs.getString(1)+"</td><td> "+rs.getString(2)+"</td><td>"+rs.getString(3)+"</td><td>"+rs.getString(4)+"</td></tr>");
                     }
        
       out.write("\n");
       out.write("                </table>\n");
-      out.write("            </div>\n");
       out.write("            \n");
-      out.write("                  \n");
-      out.write("                    \n");
-      out.write("                \n");
-      out.write("               \n");
+      out.write("            </td>\n");
+      out.write("              <td>    \n");
+      out.write("                   \n");
+      out.write("                <table style=\"background-color:white;color:red;opacity: 0.6; \">\n");
+      out.write("                    <form method=\"POST\" action=\"SendKeyToMail\">\n");
+      out.write("                        <tr>\n");
+      out.write("                            <td>File Name</td> <td><input style=\"background-color:white;\" type=\"text\" name=\"file_name\"></td>\n");
+      out.write("                             </tr>\n");
+      out.write("                              <tr>\n");
+      out.write("                            <td>User Email</td> <td><input type=\"text\" name=\"user_mail\"></td>\n");
+      out.write("                             </tr>\n");
+      out.write("                              <tr>\n");
+      out.write("                            <td></td> <td><input type=\"submit\" value=\"Request Key!!\"></td>\n");
+      out.write("                        </tr>\n");
+      out.write("                        \n");
+      out.write("                    </form>\n");
+      out.write("                </table>  \n");
+      out.write("              </td>\n");
+      out.write("                     </tr>\n");
+      out.write("                 </table>\n");
+      out.write("               </div>\n");
       out.write("            .\n");
       out.write("        </div>\n");
       out.write("        \n");

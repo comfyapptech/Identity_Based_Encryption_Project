@@ -5,6 +5,7 @@
  */
 
 
+import static java.awt.SystemColor.window;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -57,6 +58,21 @@ public class DecryptData extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            out.println("<html>\n" +
+"    <head>\n" +
+"        <link type=\"text/css\" href=\"CSS/main.css\" rel=\"stylesheet\" />\n" +
+"    </head>\n" +
+"    <body>\n" +
+"    <center>\n" +
+"        <div class=\"head\">\n" +
+"            <h2>Identity Based Encryption using KU-CSP</h2>\n" +
+"        </div>\n" +
+"        \n" +
+"        <hr>\n" +
+"        \n" +
+"    </center>\n" +
+"    </body>\n" +
+"</html>");
             HttpSession se=request.getSession();
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/ibeorcc","root","password");
@@ -65,7 +81,7 @@ public class DecryptData extends HttpServlet {
             String private_key=request.getParameter("private_key");
             
             String query="select private_key from Mailed where email='"+Email+"' and sent_key='"+private_key.trim()+"'";
-            out.println(query);
+          //  out.println(query);
             Statement st=con.createStatement();
             ResultSet rs=st.executeQuery(query);
             
@@ -80,7 +96,7 @@ public class DecryptData extends HttpServlet {
             //---------------  Reading Encrypted Files----------------
             
             String path="E:\\Cloud\\"+Email.trim()+"\\"+fname.trim();
-             out.println("Hi Terre..."+path);
+            // out.println("PATH..."+path);
             FileReader fileReader = new FileReader(path);
            
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -91,29 +107,33 @@ public class DecryptData extends HttpServlet {
                 data+=line;
             }   
             bufferedReader.close();
-            out.println("<br>Data in file : "+data+"<br>");
+            //out.println("<br>Data in file : "+data+"<br>");
             Path path1 = Paths.get(path);
             byte[] data1 = Files.readAllBytes(path1);
-            //----------------------------------------            
-            
-           // String query_for_enc_data="select Encrypted_data from csp_files where email='"+Email+"' and filename='"+fname.trim()+"'";
-           // ResultSet rs1=st.executeQuery(query_for_enc_data);
-           // out.println("<br>"+query_for_enc_data+"<hr>");
-           // byte cyphertext[]=null;
-           // if(rs1.next())
-           // {
-           //     Blob b=rs1.getBlob(1);
-           //     cyphertext=b.getBytes(1,(int)b.length());
-            //}
-            
             String plaintext=decrypt(data1, privateKey1);
-            out.println("Your File Data is: <hr>"+plaintext);
+            //out.println("<br>Your File Data is: "+plaintext+"<hr>");
             File   eoutput = new File("C:\\Users\\Prabhunath\\Documents\\NetBeansProjects\\Identity_Based_Encryption\\web\\Downloaded\\"+fname.trim());
             OutputStream outputStream=new FileOutputStream(eoutput);
             outputStream.write(plaintext.getBytes());
             outputStream.close();
-            out.println("<a  href='Downloaded/"+fname.trim()+"' download >Download</a>");
-            out.println("<a href='user_profile.jsp?File Downloaded Sucessfully.' >Go Back!</a>");
+            out.println("<center><br><br><br><br><a style='width:100px;' href='Downloaded/"+fname.trim()+"' download target=\"_blank\"><div class=\"download\">Download</div></a>");
+           
+           //-------------- Deleting after downloading..----------------- 
+            
+            String delete_from_Mailed="delete from Mailed where email='"+Email+"' and filename='"+fname.trim()+"' and sent_key !='"+private_key.trim()+"'";
+            int x=st.executeUpdate(delete_from_Mailed);
+            if(x>0)
+            {
+               // out.println("<hr>Database Updated<hr>");
+            }
+            
+            //-----------------------------------------------------------
+            out.println("<br><br><a href='user_profile.jsp?File Downloaded Sucessfully.' ><div >Go Back to Profile!!</div></a>");
+            
+            
+            out.println("</center><div style='margin-top:200px; border:1px solid white; background-color:green;border-radius:12px; width:100%; height:50px;'> </div>");
+            
+            
         }
         catch(Exception ee)
         {

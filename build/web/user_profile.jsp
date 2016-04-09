@@ -4,47 +4,11 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.Connection"%>
 <html>
-    <style>
-            .head{
-                border: 2px solid green;
-                border-radius:20px;
-                width:80%;
-                text-align:center;
-                background-color:green; 
-            }
-            .abs{
-                border: 2px solid green;
-                border-radius: 30px;
-            }
-            .tbl td
-            {
-                padding: 20px;
-            }
-            .footer
-            {
-                width:100%;
-                height:30px;
-                border:1px solid white;
-                background-color:green;
-                margin-top:20px;
-                
-                
-            }
-            .welcome
-            {
-                width:100%;
-                height:300px;
-                background-color:green;
-                background-image: url('Images/wel2.jpg'); 
-                background-repeat: no-repeat; 
-                background-size:1350px 300px;
-            }
-        </style>
+    
     <body>
     <center>
-        <div class="head">
-            <h2>Identity Based Encryption using KU-CSP</h2>
-        </div>
+        <%@include file="header.jsp" %>
+        <%@include file="connection.jsp" %>
         <table class="tbl">
             <tr>
                 <td>
@@ -62,11 +26,11 @@
             </tr>
         </table>
         <%
-       Class.forName("com.mysql.jdbc.Driver");
+       //Class.forName("com.mysql.jdbc.Driver");
        HttpSession se=request.getSession();
-       Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/ibeorcc","root","password");
+       //Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/ibeorcc","root","password");
        String email=(String)se.getAttribute("User_Email");
-       out.println("<h3>Welcome @"+email+"</h3>");
+       out.println("<h3>Welcome :"+email+"</h3>");
        String password=(String)se.getAttribute("User_Password");
        String query="select * from users where email='"+email+"' and password='"+password+"'";
        Statement pst=con.createStatement();
@@ -75,7 +39,8 @@
         %>
         <hr>
         <div class="abs">
-            <div class="welcome"><p style='color:white;'>WELCOME TO USER PROFILE</p>
+            <div class="welcome" style="background-color:green;background-image: url('Images/wel2.jpg');background-repeat: no-repeat;background-size:1350px 300px;">
+                <p style='color:white;'>WELCOME TO USER PROFILE</p>
             
             
             
@@ -83,6 +48,20 @@
             while(rs.next())
             {
                 out.println("<h2 style='color:red;'>Name:'"+rs.getString(1)+"' </h2>");
+            }
+            String status_rl="select * from revoked_list_table where email='"+email+"' and password='"+password+"'";
+            String status_tl="select * from time_list_table where email='"+email+"' and password='"+password+"'";
+            ResultSet rl=pst.executeQuery(status_rl);
+            if(rl.next())
+            {
+                out.println("<h2 style='color:white;display:inline;'>Account Status: </h2><h2 style='color:red;display:inline;'>INACTIVE</h2><br><br><br><br><br><br><br><p style='color:red;'>Servicess are not Allowed!!</p>");
+                se.setAttribute("STATUS", "INACTIVE");
+            }
+            ResultSet tl=pst.executeQuery(status_tl);
+            if(tl.next())
+            {
+                out.println("<h2 style='color:white;display:inline;'>Account Status: </h2><h2 style='color:green;display:inline;'>ACTIVE</h2><br><br><br><br><br><br><br><p style='color:green;'>Servicess are Allowed!!</p>");
+                se.setAttribute("STATUS", "ACTIVE");
             }
             
             %>

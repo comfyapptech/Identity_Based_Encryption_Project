@@ -3,58 +3,11 @@
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
 <html>
-    <style>
-            .head{
-                border: 2px solid green;
-                border-radius:20px;
-                width:80%;
-                text-align:center;
-                background-color:green; 
-            }
-            .abs{
-                border: 2px solid green;
-                border-radius: 30px;
-            }
-            .tbl td
-            {
-                padding: 20px;
-            }
-            .footer
-            {
-                width:100%;
-                height:30px;
-                border:1px solid white;
-                background-color:green;
-                margin-top:20px;
-                
-                
-            }
-            .welcome
-            {
-                width:80%;
-                height:300px;
-            }
-            .tbltr
-            {
-                color: green;
-                width:100%;
-                text-align: center;
-            }
-            .tblrow
-            {
-                width: 150px;
-            }
-            .innerdiv
-            {
-                border: 1px solid black;
-                border-radius: 50px;
-            }
-        </style>
+    
     <body>
     <center>
-        <div class="head">
-            <h2>Identity Based Encryption using KU-CSP</h2>
-        </div>
+        <%@include file="header.jsp" %>
+         <%@include file="connection.jsp" %>
         <table class="tbl">
             <tr>
                 <td>
@@ -78,7 +31,7 @@
         <div class="abs">
             <div class="welcome"><h2>MODIFY USER ACCESS</h2>
             
-                <div class="innerdiv">
+                <div class="innerdiv1">
                     <table>
                         <tr class="tbltr">
                             <td class="tblrow">
@@ -105,8 +58,8 @@
                         </tr>
                         
                         <%
-                            Class.forName("com.mysql.jdbc.Driver");
-                            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/ibeorcc","root","password");
+                            //Class.forName("com.mysql.jdbc.Driver");
+                            //Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/ibeorcc","root","password");
                             String query="select * from users";
                             Statement st=con.createStatement();
                             ResultSet rs=st.executeQuery(query);
@@ -141,10 +94,12 @@
             
             </div>
         </div>
-        <hr>
-        <div class="footer">
+        
+        
+    </center>
+                        
+                        <div style="border:1px solid white; background-color: green; width:100%; height:40px;margin-top: 100px;">
             
         </div>
-    </center>
     </body>
 </html>

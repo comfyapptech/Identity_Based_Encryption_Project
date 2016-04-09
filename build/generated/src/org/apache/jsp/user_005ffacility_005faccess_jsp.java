@@ -15,6 +15,11 @@ public final class user_005ffacility_005faccess_jsp extends org.apache.jasper.ru
 
   private static java.util.List<String> _jspx_dependants;
 
+  static {
+    _jspx_dependants = new java.util.ArrayList<String>(1);
+    _jspx_dependants.add("/header.jsp");
+  }
+
   private org.glassfish.jsp.api.ResourceInjector _jspx_resourceInjector;
 
   public java.util.List<String> getDependants() {
@@ -50,58 +55,26 @@ public final class user_005ffacility_005faccess_jsp extends org.apache.jasper.ru
       out.write("\n");
       out.write("\n");
       out.write("<html>\n");
-      out.write("    <style>\n");
-      out.write("            .head{\n");
-      out.write("                border: 2px solid green;\n");
-      out.write("                border-radius:20px;\n");
-      out.write("                width:80%;\n");
-      out.write("                text-align:center;\n");
-      out.write("                background-color:green; \n");
-      out.write("            }\n");
-      out.write("            .abs{\n");
-      out.write("                border: 2px solid green;\n");
-      out.write("                border-radius: 30px;\n");
-      out.write("            }\n");
-      out.write("            .tbl td\n");
-      out.write("            {\n");
-      out.write("                padding: 20px;\n");
-      out.write("            }\n");
-      out.write("            .footer\n");
-      out.write("            {\n");
-      out.write("                width:100%;\n");
-      out.write("                height:30px;\n");
-      out.write("                border:1px solid white;\n");
-      out.write("                background-color:green;\n");
-      out.write("                margin-top:20px;\n");
-      out.write("                \n");
-      out.write("                \n");
-      out.write("            }\n");
-      out.write("            .welcome\n");
-      out.write("            {\n");
-      out.write("                width:80%;\n");
-      out.write("                height:300px;\n");
-      out.write("            }\n");
-      out.write("            .tbltr\n");
-      out.write("            {\n");
-      out.write("                color: green;\n");
-      out.write("                width:100%;\n");
-      out.write("                text-align: center;\n");
-      out.write("            }\n");
-      out.write("            .tblrow\n");
-      out.write("            {\n");
-      out.write("                width: 150px;\n");
-      out.write("            }\n");
-      out.write("            .innerdiv\n");
-      out.write("            {\n");
-      out.write("                border: 1px solid black;\n");
-      out.write("                border-radius: 50px;\n");
-      out.write("            }\n");
-      out.write("        </style>\n");
+      out.write("    \n");
+      out.write("    <body>\n");
+      out.write("    <center>\n");
+      out.write("        ");
+      out.write("<html>\n");
+      out.write("    <head>\n");
+      out.write("        <link type=\"text/css\" href=\"CSS/main.css\" rel=\"stylesheet\" />\n");
+      out.write("    </head>\n");
       out.write("    <body>\n");
       out.write("    <center>\n");
       out.write("        <div class=\"head\">\n");
-      out.write("            <h2>Identity-Based Encryption with Outsourced Revocation in Cloud Computing</h2>\n");
+      out.write("            <h2>Identity Based Encryption using KU-CSP</h2>\n");
       out.write("        </div>\n");
+      out.write("        \n");
+      out.write("        <hr>\n");
+      out.write("        \n");
+      out.write("    </center>\n");
+      out.write("    </body>\n");
+      out.write("</html>");
+      out.write("\n");
       out.write("        <table class=\"tbl\">\n");
       out.write("            <tr>\n");
       out.write("                <td>\n");
@@ -125,7 +98,7 @@ public final class user_005ffacility_005faccess_jsp extends org.apache.jasper.ru
       out.write("        <div class=\"abs\">\n");
       out.write("            <div class=\"welcome\"><h2>MODIFY USER ACCESS</h2>\n");
       out.write("            \n");
-      out.write("                <div class=\"innerdiv\">\n");
+      out.write("                <div class=\"innerdiv1\">\n");
       out.write("                    <table>\n");
       out.write("                        <tr class=\"tbltr\">\n");
       out.write("                            <td class=\"tblrow\">\n");

@@ -11,6 +11,11 @@ public final class CSPRegister_jsp extends org.apache.jasper.runtime.HttpJspBase
 
   private static java.util.List<String> _jspx_dependants;
 
+  static {
+    _jspx_dependants = new java.util.ArrayList<String>(1);
+    _jspx_dependants.add("/header.jsp");
+  }
+
   private org.glassfish.jsp.api.ResourceInjector _jspx_resourceInjector;
 
   public java.util.List<String> getDependants() {
@@ -77,13 +82,20 @@ public final class CSPRegister_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        </style>\n");
       out.write("    <body>\n");
       out.write("    <center>\n");
+      out.write("        ");
+      out.write("<html>\n");
+      out.write("    <head>\n");
+      out.write("        <link type=\"text/css\" href=\"CSS/main.css\" rel=\"stylesheet\" />\n");
+      out.write("    </head>\n");
+      out.write("    <body>\n");
+      out.write("    <center>\n");
       out.write("        <div class=\"head\">\n");
-      out.write("            <h2>Identity-Based Encryption with Outsourced Revocation in Cloud Computing</h2>\n");
+      out.write("            <h2>Identity Based Encryption using KU-CSP</h2>\n");
       out.write("        </div>\n");
       out.write("        <table class=\"tbl\">\n");
       out.write("            <tr>\n");
       out.write("                <td>\n");
-      out.write("                    <a href=\"index.html\">HOME</a>\n");
+      out.write("                    <a href=\"index.jsp\">HOME</a>\n");
       out.write("                </td>\n");
       out.write("                <td>\n");
       out.write("                     <a href=\"pkglogin.jsp\">PKG</a>\n");
@@ -100,11 +112,16 @@ public final class CSPRegister_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            </tr>\n");
       out.write("        </table>\n");
       out.write("        <hr>\n");
+      out.write("        \n");
+      out.write("    </center>\n");
+      out.write("    </body>\n");
+      out.write("</html>");
+      out.write("<hr>\n");
       out.write("        <div class=\"form\" style=\"width:90%;\">\n");
       out.write("            <div class=\"form\" style=\"width:30%; background-color:green;background-image: url('Images/register.png'); background-repeat: no-repeat; background-size:400px 300px;\">.</div>\n");
       out.write("            <div class=\"form\" style=\"width:30%;margin-top: 20px;\">\n");
       out.write("                <br>  \n");
-      out.write("                <h3>PKG REGISTRATION</h3>\n");
+      out.write("                <h3>CSP REGISTRATION</h3>\n");
       out.write("                <hr style=\"width:200px;\">\n");
       out.write("                <table>\n");
       out.write("                    \n");

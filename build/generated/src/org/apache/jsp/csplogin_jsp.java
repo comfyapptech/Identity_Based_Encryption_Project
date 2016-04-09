@@ -78,12 +78,12 @@ public final class csplogin_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("    <body>\r\n");
       out.write("    <center>\r\n");
       out.write("        <div class=\"head\">\r\n");
-      out.write("            <h2>Identity-Based Encryption with Outsourced Revocation in Cloud Computing</h2>\r\n");
+      out.write("            <h2>Identity Based Encryption using KU-CSP</h2>\r\n");
       out.write("        </div>\r\n");
       out.write("        <table class=\"tbl\">\r\n");
       out.write("            <tr>\r\n");
       out.write("                <td>\r\n");
-      out.write("                    <a href=\"index.html\">HOME</a>\r\n");
+      out.write("                    <a href=\"index.jsp\">HOME</a>\r\n");
       out.write("                </td>\r\n");
       out.write("                <td>\r\n");
       out.write("                     <a href=\"pkglogin.jsp\">PKG</a>\r\n");
@@ -114,7 +114,7 @@ public final class csplogin_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                            <td>USER NAME</td><td><input type=\"text\" name=\"user_name\"></td>\r\n");
       out.write("                        </tr>\r\n");
       out.write("                        <tr>\r\n");
-      out.write("                            <td>PASSWORD</td><td><input type=\"text\" name=\"password\" ></td>\r\n");
+      out.write("                            <td>PASSWORD</td><td><input type=\"password\" name=\"password\" ></td>\r\n");
       out.write("                        </tr>\r\n");
       out.write("                        <tr>\r\n");
       out.write("                            <td></td><td><input type=\"submit\" value=\"LOGIN\"></td>\r\n");
